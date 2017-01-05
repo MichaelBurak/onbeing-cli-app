@@ -10,5 +10,26 @@ class Philosophy_podcast::Scraper
     end
   end
 
+  def self.scrape_guests
+    self.scrape.xpath("//div[@class='field-content']/a[@class='guests-link']").each_with_index do |pod, i|
+      puts "#{i}... #{pod.text}"
+    end
+  end
+
+  def self.scrape_descriptions
+    self.scrape.xpath("//div[@class='views-field views-field-field-episode-main-header-blurb']/div[@class='field-content']/p").each_with_index do |pod, i|
+      puts "#{i}... #{pod.text}"
+    end
+  end
+
+  def self.scrape_dates
+    self.scrape.xpath("//div[@class='field-content']/span[@class='date-display-single']").each_with_index do |pod, i|
+      puts "#{i}... #{pod.text}"
+    end
+  end
+
 end
   binding.pry
+
+#//div[@class='field-content']/a[@class='guests-link'] - xpath for guest
+# //div[@class='views-field views-field-field-episode-main-header-blurb']/div[@class='field-content']/p - xpath for episode description
