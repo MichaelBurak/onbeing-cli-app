@@ -40,7 +40,7 @@ attr_accessor :title
 
   def self.scrape_episodes
     doc= self.scrape
-    ep_doc = doc.search("//div[@id='main-wrapper']/div[@id='main']/div[@id='content']/div[@class='section']/div[@class='region region-content']/div[@id='block-system-main']/div[@class='content']/div[@id='master-episode-list-block']/div[@class='panel-col-top panel-panel clearfix']/div[@class='inside']/div[@class='panel-pane pane-views pane-episode-list episode-list-show-block clearfix']").class
+    ep_doc = doc.search("//div[@id='main-wrapper']/div[@id='main']/div[@id='content']/div[@class='section']/div[@class='region region-content']/div[@id='block-system-main']/div[@class='content']/div[@id='master-episode-list-block']/div[@class='panel-col-top panel-panel clearfix']/div[@class='inside']/div[@class='panel-pane pane-views pane-episode-list episode-list-show-block clearfix']")
     ep_doc.each do |pod|
     cast = self.new
     cast.title = doc.xpath("//div[@class='field-content']/span[@class='date-display-single']").text
