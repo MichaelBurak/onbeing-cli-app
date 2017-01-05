@@ -1,7 +1,18 @@
 class Philosophy_podcast::Scraper
+attr_accessor :title
+
+  @@all = []
+
+  def initialize
+    @@all << self
+  end
+
+  def self.all
+    @@all
+  end
 
   def self.scrape #main scraper
-    Nokogiri::HTML(open('http://www.onbeing.org/programs/2016')).xpath("//span[@class='field-content']/a")
+    Nokogiri::HTML(open('http://www.onbeing.org/programs/2016'))#.xpath("//span[@class='field-content']/a")
   end
 
   def self.scrape_episode_list #scrapes text of each podcast episode name
@@ -27,6 +38,15 @@ class Philosophy_podcast::Scraper
       puts "#{i}... #{pod.text}"
     end
   end
+
+  def self.scrape_episodes
+    doc= self.scrape
+    ep_doc = doc.xpath("//div[@id='main-wrapper']/div[@id='main']/div[@id='content']/div[@class='section']/div[@class='region region-content']/div[@id='block-system-main']/div[@class='content']/div[@id='master-episode-list-block']/div[@class='panel-col-top panel-panel clearfix']/div[@class='inside']/div[@class='panel-pane pane-views pane-episode-list episode-list-show-block clearfix']")
+    ep_doc.collect.with_index do |pod, i|
+    pod = self.new
+    pod.title = i
+  end
+end
 
 end
   binding.pry

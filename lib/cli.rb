@@ -7,10 +7,9 @@ class CLI
     when "y"
     Philosophy_podcast::Scraper.scrape_episode_list
     puts "Would you like to see more detail on an episode? Type the episode's number."
-    #display Podcast class's attributes by index, input = index 
+    #display Podcast class's attributes by index, input = index
     when "n"
       "Goodbye!"
-      break
     end
   end
 
