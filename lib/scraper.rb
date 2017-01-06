@@ -1,7 +1,7 @@
 class Philosophy_podcast::Scraper
-attr_accessor :title
+attr_accessor :title, :guest
   @@all = []
-
+  @@guest_array = []
   def initialize
     @@all << self
   end
@@ -21,10 +21,14 @@ attr_accessor :title
     end
   end
 
-  def self.scrape_guests #would correspond to @guest
+  def self.scrape_guests #scrapes and pushes to guest array to be indexed into attributes
     self.scrape.xpath("//div[@class='field-content']/a[@class='guests-link']").each_with_index do |pod, i|
-      puts "#{i}... #{pod.text}"
+      @@guest_array << "#{pod.text}"
     end
+  end
+
+  def self.array
+    @@guest_array
   end
 
   def self.scrape_description #would correspond to @description
@@ -45,6 +49,11 @@ attr_accessor :title
     ep_doc.each do |pod|
     self.new.title = doc.xpath("//div[@class='field-content']/span[@class='date-display-single']").text
   end
-  end
 end
+
+
   binding.pry
+
+end
+#scrape descriptions, etc. into arrays and then when iterating over scraped data, instantiate by using a counter
+#- the index number that corresponds. Ie. scrape_title.text.to_a, then a = self.new , a.title = [index=counter]?
