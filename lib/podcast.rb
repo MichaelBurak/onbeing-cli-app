@@ -1,7 +1,10 @@
 class Philosophy_podcast::Podcast
-  attr_accessor :guest, :description, :date, :title
+  attr_accessor :guest, :description, :title
 
   @@all = []
+  @@guest_array = []
+  @@title_array = []
+  @@description_array = []
 
   def initialize
     @@all << self
@@ -11,4 +14,37 @@ class Philosophy_podcast::Podcast
     @@all
   end
 
-end 
+  def self.scrape_episode_title #scrapes text of each podcast episode name, assigns to array
+    #would correspond to @title
+    Philosophy_podcast::Scraper.scrape.xpath("//span[@class='field-content']/a").each_with_index do |pod, i|
+      @@title_array << "#{pod.text}"
+    end
+  end
+
+  def self.scrape_guests #corresponds to @guest
+    Philosophy_podcast::Scraper.scrape.xpath("//div[@class='field-content']/a[@class='guests-link']").each_with_index do |pod, i|
+      @@guest_array << "#{pod.text}"
+    end
+  end
+
+  def self.scrape_description #would correspond to @description
+    Philosophy_podcast::Scraper.scrape.xpath("//div[@class='views-field views-field-field-episode-main-header-blurb']/div[@class='field-content']/p").each do |pod|
+      @@description_array << "#{pod.text}"
+    end
+  end
+
+  def self.add_podcasts #instantiates new instances and adds arrays to attributes
+    self.scrape_guests
+    self.scrape_episode_title
+    self.scrape_description
+    counter = 0
+    while counter < @@title_array.size
+    n = self.new
+    n.guest = @@guest_array[counter + 1]
+    n.title = @@title_array[counter]
+    n.description = @@description_array[counter + 1]
+    counter += 1
+  end
+end
+
+end
