@@ -63,4 +63,4 @@ end
 
 end
 #scrape descriptions, etc. into arrays and then when iterating over scraped data, instantiate by using a counter
-#- the index number that corresponds. Ie. scrape_title.text.to_a, then a = self.new , a.title = [index=counter]?
+#- the index number that corresponds. Ie. scrape_title.text.each_with_index push into a new array, then a = self.new , a.title = [index of new array=counter]?
