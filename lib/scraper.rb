@@ -2,6 +2,8 @@ class Philosophy_podcast::Scraper
 attr_accessor :title, :guest
   @@all = []
   @@guest_array = []
+  @@title_array = []
+
   def initialize
     @@all << self
   end
@@ -17,7 +19,7 @@ attr_accessor :title, :guest
   def self.scrape_episode_list #scrapes text of each podcast episode name, "puts" line is/was to test
     #would correspond to @title
     self.scrape.xpath("//span[@class='field-content']/a").each_with_index do |pod, i|
-      puts "#{i}... #{pod.text}"
+      @@title_array << "#{pod.text}"
     end
   end
 
@@ -27,14 +29,20 @@ attr_accessor :title, :guest
     end
   end
 
-  def self.array #displays guest array
+  def self.guest_array #displays guest array
     @@guest_array
   end
 
-  def self.add_guests #instantiates new instances and adds guest array to guest attribute
-    @@guest_array.each do |ga|
+  def self.add_guests_and_titles #instantiates new instances and adds guest array to guest attribute
+    #PROBLEM: doesn't match up. Top of page episode's guest is instantiated but not its title.
+    self.scrape_guests
+    self.scrape_episode_list
+    counter = 0
+    while counter < 100
     n = self.new
-    n.guest = ga
+    n.guest = @@guest_array[counter]
+    n.title = @@title_array[counter]
+    counter += 1
   end
 end
 
