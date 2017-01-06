@@ -13,7 +13,7 @@ class Philosophy_podcast::CLI
     i2 = gets.strip.to_i
     print_episode(i2)
     puts "Would you like to go back to the list? y or n"
-    #how to loop here?
+    #how to loop here using i2's input to go back to the correct list?
     #add in stuff for non-applicable input
     when "n"
       "Goodbye!"
@@ -28,8 +28,8 @@ class Philosophy_podcast::CLI
   end
 
   def print_episode(from_number)
-    puts "#{Philosophy_podcast::Podcast.all[from_number].title} - #{Philosophy_podcast::Podcast.all[from_number].guest}"
-    puts "#{Philosophy_podcast::Podcast.all[from_number].description}"
+    puts "#{Philosophy_podcast::Podcast.all[from_number-1].title} - #{Philosophy_podcast::Podcast.all[from_number-1].guest}"
+    puts "#{Philosophy_podcast::Podcast.all[from_number-1].description}"
   end
 
 
