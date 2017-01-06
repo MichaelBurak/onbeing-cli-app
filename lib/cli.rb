@@ -5,9 +5,13 @@ class CLI
     input = gets.strip
     case input
     when "y"
-    Philosophy_podcast::Scraper.scrape_episode_list
+    puts "do you want to see 1-10, 2,20, etc."
+    #input = gets.strip.to_i
+    #Philosophy_podcast::Podcast method for displaying episode list(input), refer to world's best restaurant
     puts "Would you like to see more detail on an episode? Type the episode's number."
-    #display Podcast class's attributes by index, input = index
+    #display Podcast @@all but by index with input = index - 1
+    #add in ability to go back to the list, exit
+    #add in stuff for non-applicable input
     when "n"
       "Goodbye!"
     end

@@ -1,8 +1,5 @@
-#require_relative 'podcast.rb'
-
 class Philosophy_podcast::Scraper
 
-  @@all = []
   @@guest_array = []
   @@title_array = []
   @@description_array = []
