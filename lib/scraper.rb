@@ -1,62 +1,49 @@
+#require_relative 'podcast.rb'
+
 class Philosophy_podcast::Scraper
-attr_accessor :title, :guest
+
   @@all = []
   @@guest_array = []
   @@title_array = []
-
-  def initialize
-    @@all << self
-  end
-
-  def self.all
-    @@all
-  end
+  @@description_array = []
 
   def self.scrape #main scraper
     Nokogiri::HTML(open('http://www.onbeing.org/programs/2016'))#.xpath("//span[@class='field-content']/a")
   end
 
-  def self.scrape_episode_list #scrapes text of each podcast episode name, "puts" line is/was to test
+  def self.scrape_episode_title #scrapes text of each podcast episode name, "puts" line is/was to test
     #would correspond to @title
     self.scrape.xpath("//span[@class='field-content']/a").each_with_index do |pod, i|
       @@title_array << "#{pod.text}"
     end
   end
 
-  def self.scrape_guests #scrapes and pushes to guest array to be indexed into attributes
+  def self.scrape_guests #scrapes and pushes to guest array to be indexed into attributes, corresponds to @guest
     self.scrape.xpath("//div[@class='field-content']/a[@class='guests-link']").each_with_index do |pod, i|
       @@guest_array << "#{pod.text}"
     end
   end
 
-  def self.guest_array #displays guest array
-    @@guest_array
+  def self.scrape_description #would correspond to @description
+    self.scrape.xpath("//div[@class='views-field views-field-field-episode-main-header-blurb']/div[@class='field-content']/p").each do |pod|
+      @@description_array << "#{pod.text}"
+    end
   end
 
-  def self.add_guests_and_titles #instantiates new instances and adds guest array to guest attribute
-    #PROBLEM: doesn't match up. Top of page episode's guest is instantiated but not its title.
+  def self.add_podcasts #instantiates new instances and adds arrays to attributes
     self.scrape_guests
-    self.scrape_episode_list
+    self.scrape_episode_title
+    self.scrape_description
     counter = 0
     while counter < 100
-    n = self.new
-    n.guest = @@guest_array[counter]
+    n = Philosophy_podcast::Podcast.new
+    n.guest = @@guest_array[counter + 1]
     n.title = @@title_array[counter]
+    n.description = @@description_array[counter + 1]
     counter += 1
   end
 end
 
-  def self.scrape_description #would correspond to @description
-    self.scrape.xpath("//div[@class='views-field views-field-field-episode-main-header-blurb']/div[@class='field-content']/p").each_with_index do |pod, i|
-      puts "#{i}... #{pod.text}"
-    end
-  end
-
-  def self.scrape_dates #would correspond to @date
-    self.scrape.xpath("//div[@class='field-content']/span[@class='date-display-single']").each_with_index do |pod, i|
-      puts "#{i}... #{pod.text}"
-    end
-  end
 
   def self.scrape_episodes #doesn't currently work, meant to 1. scrape, 2. instantiate new objects with attributes(currently testing title)
     doc= self.scrape
