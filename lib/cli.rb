@@ -1,4 +1,4 @@
-class CLI
+class Philosophy_podcast::CLI
 
   def call
     puts "Welcome to the 2016 episode archive of On Being. Do you want to see a list of episodes? y or n"
