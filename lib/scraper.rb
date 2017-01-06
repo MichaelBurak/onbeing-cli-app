@@ -14,42 +14,37 @@ attr_accessor :title
     Nokogiri::HTML(open('http://www.onbeing.org/programs/2016'))#.xpath("//span[@class='field-content']/a")
   end
 
-  def self.scrape_episode_list #scrapes text of each podcast episode name
+  def self.scrape_episode_list #scrapes text of each podcast episode name, "puts" line is/was to test
+    #would correspond to @title
     self.scrape.xpath("//span[@class='field-content']/a").each_with_index do |pod, i|
       puts "#{i}... #{pod.text}"
     end
   end
 
-  def self.scrape_guests
+  def self.scrape_guests #would correspond to @guest
     self.scrape.xpath("//div[@class='field-content']/a[@class='guests-link']").each_with_index do |pod, i|
       puts "#{i}... #{pod.text}"
     end
   end
 
-  def self.scrape_descriptions
+  def self.scrape_description #would correspond to @description
     self.scrape.xpath("//div[@class='views-field views-field-field-episode-main-header-blurb']/div[@class='field-content']/p").each_with_index do |pod, i|
       puts "#{i}... #{pod.text}"
     end
   end
 
-  def self.scrape_dates
+  def self.scrape_dates #would correspond to @date
     self.scrape.xpath("//div[@class='field-content']/span[@class='date-display-single']").each_with_index do |pod, i|
       puts "#{i}... #{pod.text}"
     end
   end
 
-  def self.scrape_episodes
+  def self.scrape_episodes #doesn't currently work, meant to 1. scrape, 2. instantiate new objects with attributes(currently testing title)
     doc= self.scrape
-    ep_doc = doc.search("//div[@id='main-wrapper']/div[@id='main']/div[@id='content']/div[@class='section']/div[@class='region region-content']/div[@id='block-system-main']/div[@class='content']/div[@id='master-episode-list-block']/div[@class='panel-col-top panel-panel clearfix']/div[@class='inside']/div[@class='panel-pane pane-views pane-episode-list episode-list-show-block clearfix']")
+    ep_doc = doc.search("//div[@class='panel-pane pane-views pane-episode-list episode-list-show-block clearfix']")
     ep_doc.each do |pod|
-    cast = self.new
-    cast.title = doc.xpath("//div[@class='field-content']/span[@class='date-display-single']").text
+    self.new.title = doc.xpath("//div[@class='field-content']/span[@class='date-display-single']").text
+  end
   end
 end
-
-end
   binding.pry
-
-#//div[@class='field-content']/a[@class='guests-link'] - xpath for guest
-# //div[@class='views-field views-field-field-episode-main-header-blurb']/div[@class='field-content']/p - xpath for episode description
-#master-episode-list-block > div.panel-col-top.panel-panel.clearfix > div > div.panel-pane.pane-views.pane-episode-list.episode-list-show-block.clearfix
