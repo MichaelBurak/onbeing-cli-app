@@ -27,9 +27,16 @@ attr_accessor :title, :guest
     end
   end
 
-  def self.array
+  def self.array #displays guest array
     @@guest_array
   end
+
+  def self.add_guests #instantiates new instances and adds guest array to guest attribute
+    @@guest_array.each do |ga|
+    n = self.new
+    n.guest = ga
+  end
+end
 
   def self.scrape_description #would correspond to @description
     self.scrape.xpath("//div[@class='views-field views-field-field-episode-main-header-blurb']/div[@class='field-content']/p").each_with_index do |pod, i|
