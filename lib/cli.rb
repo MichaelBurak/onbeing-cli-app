@@ -10,7 +10,8 @@ class Philosophy_podcast::CLI
     i = gets.strip.to_i
     print_list(i)
     puts "Would you like to see more detail on an episode? Type the episode's number."
-    #display Podcast @@all but by index with input = index - 1
+    i2 = gets.strip.to_i
+    print_episode(i2)#display Podcast @@all but by index with input = index - 1
     #add in ability to go back to the list, exit
     #add in stuff for non-applicable input
     when "n"
@@ -20,9 +21,14 @@ class Philosophy_podcast::CLI
 
   def print_list(from_number)
     puts "Episodes #{from_number} - #{from_number +9}"
-    puts Philosophy_podcast::Podcast.all[from_number-1, 10].each_with_index(from_number) do |podcast, index|
+    Philosophy_podcast::Podcast.all[from_number-1, 10].each.with_index(from_number) do |podcast, index|
       puts "#{index}. #{podcast.title}"
     end
   end
+
+  def print_episode(from_number)
+    puts "#{Philosophy_podcast::Podcast.all[from_number].title}"
+  end
+
 
 end
