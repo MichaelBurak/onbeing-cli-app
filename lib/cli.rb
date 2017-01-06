@@ -11,8 +11,9 @@ class Philosophy_podcast::CLI
     print_list(i)
     puts "Would you like to see more detail on an episode? Type the episode's number."
     i2 = gets.strip.to_i
-    print_episode(i2)#display Podcast @@all but by index with input = index - 1
-    #add in ability to go back to the list, exit
+    print_episode(i2)
+    puts "Would you like to go back to the list? y or n"
+    #how to loop here?
     #add in stuff for non-applicable input
     when "n"
       "Goodbye!"
@@ -27,7 +28,8 @@ class Philosophy_podcast::CLI
   end
 
   def print_episode(from_number)
-    puts "#{Philosophy_podcast::Podcast.all[from_number].title}"
+    puts "#{Philosophy_podcast::Podcast.all[from_number].title} - #{Philosophy_podcast::Podcast.all[from_number].guest}"
+    puts "#{Philosophy_podcast::Podcast.all[from_number].description}"
   end
 
 
