@@ -15,13 +15,13 @@ class Philosophy_podcast::Podcast
   end
 
   def self.scrape_episode_title
-    Philosophy_podcast::Scraper.scrape.xpath("//span[@class='field-content']/a").each_with_index do |pod, i|
+    Philosophy_podcast::Scraper.scrape.xpath("//span[@class='field-content']/a").each do |pod|
       @@title_array << "#{pod.text}"
     end
   end
 
   def self.scrape_guests
-    Philosophy_podcast::Scraper.scrape.xpath("//div[@class='field-content']/a[@class='guests-link']").each_with_index do |pod, i|
+    Philosophy_podcast::Scraper.scrape.xpath("//div[@class='field-content']/a[@class='guests-link']").each do |pod, i|
       @@guest_array << "#{pod.text}"
     end
   end
