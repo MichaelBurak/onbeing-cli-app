@@ -7,8 +7,7 @@ class Philosophy_podcast::CLI
       puts "Goodbye!"
     elsif input == "y"
     Philosophy_podcast::Podcast.add_podcasts
-    #while input || i3 != "n"
-      begin
+    begin
     puts "Do you want to see episodes 1-10, 5-14, etc.?"
     i = gets.strip.to_i
     print_list(i)
@@ -19,14 +18,12 @@ class Philosophy_podcast::CLI
     i3 = gets.strip
     if i3 == "y" then next
     end until i3 == "n"
-
-     #how to make this not an infinite loop back to 'do you want to see'
-    #add in stuff for non-applicable input
-  end
+    end
     end
   end
 
   def print_list(from_number)
+    puts ""
     puts "Episodes #{from_number} - #{from_number +9}"
     Philosophy_podcast::Podcast.all[from_number-1, 10].each.with_index(from_number) do |podcast, index|
       puts "#{index}. #{podcast.title}"
@@ -34,8 +31,10 @@ class Philosophy_podcast::CLI
   end
 
   def print_episode(from_number)
+    puts ""
     puts "#{Philosophy_podcast::Podcast.all[from_number-1].title} - #{Philosophy_podcast::Podcast.all[from_number-1].guest}"
     puts "#{Philosophy_podcast::Podcast.all[from_number-1].description}"
+    puts ""
   end
 
 

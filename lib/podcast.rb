@@ -14,26 +14,25 @@ class Philosophy_podcast::Podcast
     @@all
   end
 
-  def self.scrape_episode_title #scrapes text of each podcast episode name, assigns to array
-    #would correspond to @title
+  def self.scrape_episode_title
     Philosophy_podcast::Scraper.scrape.xpath("//span[@class='field-content']/a").each_with_index do |pod, i|
       @@title_array << "#{pod.text}"
     end
   end
 
-  def self.scrape_guests #corresponds to @guest
+  def self.scrape_guests
     Philosophy_podcast::Scraper.scrape.xpath("//div[@class='field-content']/a[@class='guests-link']").each_with_index do |pod, i|
       @@guest_array << "#{pod.text}"
     end
   end
 
-  def self.scrape_description #would correspond to @description
+  def self.scrape_description
     Philosophy_podcast::Scraper.scrape.xpath("//div[@class='views-field views-field-field-episode-main-header-blurb']/div[@class='field-content']/p").each do |pod|
       @@description_array << "#{pod.text}"
     end
   end
 
-  def self.add_podcasts #instantiates new instances and adds arrays to attributes
+  def self.add_podcasts
     self.scrape_guests
     self.scrape_episode_title
     self.scrape_description
