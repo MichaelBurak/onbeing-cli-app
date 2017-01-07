@@ -16,9 +16,8 @@ class Philosophy_podcast::CLI
     print_episode(i2)
     puts "Would you like to go back to the list? y or n? n will quit the program."
     i3 = gets.strip
-    if i3 == "y" then next
+    next
     end until i3 == "n"
-    end
     end
   end
 
